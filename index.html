@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portafolio — ZentroDigital</title>
+<meta name="description" content="Portafolio de ZentroDigital: páginas web a la medida para negocios de toda Colombia. Tiendas, restaurantes, gimnasios, servicios y más.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230A0810'/%3E%3Cpath fill='%238B5CF6' d='M22 22 H78 V36 L46 64 H78 V78 H22 V64 L54 36 H22 Z'/%3E%3Cpath fill='%235B21B6' d='M54 36 H78 L46 64 H22 Z'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --marca:#5B21B6; --bril:#8B5CF6; --claro:#A78BFA; --medio:#6D28D9;
+    --tinta:#0A0810; --tinta2:#120F1D; --tinta3:#1A1529;
+    --txt:#EDEAF6; --apag:#9A93AE; --linea:#271F3D; --linea2:#342B4E;
+    --rad:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--tinta); color:var(--txt);
+    font-family:Inter,"Segoe UI",system-ui,-apple-system,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:"Cascadia Mono","SFMono-Regular",Consolas,monospace}
+
+  /* fondo con destellos */
+  .glow{position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:
+      radial-gradient(60vw 60vw at 78% -8%, rgba(139,92,246,.16), transparent 60%),
+      radial-gradient(55vw 55vw at -10% 22%, rgba(91,33,182,.20), transparent 60%),
+      radial-gradient(50vw 40vw at 50% 120%, rgba(109,40,217,.14), transparent 60%);
+  }
+
+  .wrap{width:min(1180px,92vw);margin-inline:auto}
+
+  /* ===== Header ===== */
+  header{position:sticky;top:0;z-index:50;
+    background:rgba(10,8,16,.72);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--linea)}
+  .nav{display:flex;align-items:center;justify-content:space-between;
+    padding:14px 0}
+  .brand{display:flex;align-items:center;gap:11px}
+  .brand svg{width:34px;height:34px;flex:none;
+    filter:drop-shadow(0 3px 10px rgba(139,92,246,.45))}
+  .z-base{fill:var(--bril)} .z-diag{fill:var(--marca)}
+  .word{font-weight:800;font-size:1.15rem;letter-spacing:.2px}
+  .word b{font-weight:800} .word span{font-weight:500;color:var(--claro)}
+  .nav .cta{display:inline-flex;align-items:center;gap:8px;
+    padding:9px 16px;border-radius:999px;font-weight:600;font-size:.92rem;
+    background:linear-gradient(135deg,var(--marca),var(--bril));
+    box-shadow:0 6px 20px rgba(91,33,182,.45);white-space:nowrap}
+  .nav .cta:hover{filter:brightness(1.08)}
+
+  /* ===== Hero ===== */
+  .hero{padding:74px 0 40px;text-align:center}
+  .kicker{display:inline-block;font-size:.72rem;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--claro);
+    padding:7px 15px;border:1px solid var(--linea2);border-radius:999px;
+    background:rgba(139,92,246,.06);margin-bottom:22px}
+  .hero h1{font-size:clamp(2.1rem,6.4vw,4rem);line-height:1.05;
+    font-weight:800;letter-spacing:-.02em}
+  .hero h1 em{font-style:normal;
+    background:linear-gradient(120deg,var(--claro),var(--bril) 60%,var(--marca));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{max-width:640px;margin:20px auto 0;color:var(--apag);
+    font-size:clamp(1rem,2.4vw,1.18rem)}
+  .stats{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:30px}
+  .stat{padding:12px 20px;border:1px solid var(--linea);border-radius:14px;
+    background:var(--tinta2);min-width:118px}
+  .stat b{display:block;font-size:1.5rem;font-weight:800;color:var(--txt)}
+  .stat small{color:var(--apag);font-size:.78rem;letter-spacing:.04em}
+
+  /* ===== Filtros ===== */
+  .filters{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+    margin:40px 0 8px}
+  .chip{cursor:pointer;font:inherit;font-size:.9rem;font-weight:600;
+    color:var(--apag);padding:9px 18px;border-radius:999px;
+    border:1px solid var(--linea2);background:var(--tinta2);
+    transition:.2s}
+  .chip:hover{color:var(--txt);border-color:var(--claro)}
+  .chip.on{color:#fff;border-color:transparent;
+    background:linear-gradient(135deg,var(--marca),var(--bril));
+    box-shadow:0 6px 18px rgba(91,33,182,.4)}
+
+  /* ===== Galería ===== */
+  .grid{display:grid;gap:22px;margin:30px 0 10px;
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+  .card{position:relative;border:1px solid var(--linea);border-radius:var(--rad);
+    background:var(--tinta2);overflow:hidden;display:flex;flex-direction:column;
+    transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+  .card:hover{transform:translateY(-6px);border-color:var(--claro);
+    box-shadow:0 18px 44px -18px rgba(139,92,246,.55)}
+  .shot{position:relative;aspect-ratio:16/10;overflow:hidden;
+    border-bottom:1px solid var(--linea)}
+  .shot img{width:100%;height:100%;object-fit:cover;object-position:top center;
+    display:block;transition:transform .5s ease}
+  .card:hover .shot img{transform:scale(1.05)}
+  .tag{position:absolute;top:12px;left:12px;z-index:2;
+    font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    padding:5px 11px;border-radius:999px;color:#fff;
+    background:rgba(10,8,16,.62);backdrop-filter:blur(6px);
+    border:1px solid rgba(167,139,250,.4)}
+  .body{padding:17px 18px 19px;display:flex;flex-direction:column;gap:4px;flex:1}
+  .body h3{font-size:1.16rem;font-weight:700}
+  .body p{color:var(--apag);font-size:.9rem;flex:1}
+  .go{margin-top:12px;display:inline-flex;align-items:center;gap:8px;
+    align-self:flex-start;font-weight:600;font-size:.92rem;color:var(--claro)}
+  .go svg{width:15px;height:15px;transition:transform .2s}
+  .card:hover .go svg{transform:translate(3px,-3px)}
+  /* enlace que cubre toda la tarjeta (excepto botones especiales) */
+  .cover{position:absolute;inset:0;z-index:1}
+
+  /* variantes (Ritual Verde) */
+  .variants{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;position:relative;z-index:2}
+  .variants a{font-size:.83rem;font-weight:600;padding:7px 13px;border-radius:999px;
+    border:1px solid var(--linea2);background:var(--tinta3);color:var(--txt);transition:.2s}
+  .variants a:hover{border-color:var(--claro);background:rgba(139,92,246,.14)}
+
+  /* ===== Contacto ===== */
+  .contact{margin:70px 0 40px;padding:44px 30px;text-align:center;
+    border:1px solid var(--linea2);border-radius:26px;
+    background:linear-gradient(160deg,var(--tinta3),var(--tinta2));
+    position:relative;overflow:hidden}
+  .contact::before{content:"";position:absolute;inset:0;z-index:0;
+    background:radial-gradient(40vw 40vw at 50% -30%,rgba(139,92,246,.22),transparent 60%)}
+  .contact>*{position:relative;z-index:1}
+  .contact h2{font-size:clamp(1.6rem,4.2vw,2.4rem);font-weight:800;letter-spacing:-.01em}
+  .contact p{color:var(--apag);max-width:560px;margin:12px auto 0}
+  .btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:26px}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-weight:600;
+    padding:13px 24px;border-radius:999px;font-size:1rem}
+  .btn-wa{background:#25D366;color:#062b12;box-shadow:0 8px 24px rgba(37,211,102,.35)}
+  .btn-wa:hover{filter:brightness(1.06)}
+  .btn-mail{border:1px solid var(--linea2);color:var(--txt);background:var(--tinta2)}
+  .btn-mail:hover{border-color:var(--claro)}
+  .btn svg{width:19px;height:19px}
+
+  /* ===== Footer ===== */
+  footer{border-top:1px solid var(--linea);padding:34px 0 42px;text-align:center}
+  .slogan{font-size:1.05rem;color:var(--txt);font-weight:500;margin-bottom:10px}
+  .slogan b{color:var(--claro)}
+  /* «confianza» siempre en neón */
+  .neon{color:#A78BFA;font-style:normal;font-weight:700;
+    text-shadow:0 0 4px rgba(167,139,250,.95),0 0 12px rgba(167,139,250,.85),
+      0 0 24px rgba(167,139,250,.65),0 0 44px rgba(167,139,250,.5)}
+  footer small{color:var(--apag);font-size:.82rem;display:block;margin-top:6px}
+  .foot-brand{display:inline-flex;align-items:center;gap:9px;margin-bottom:16px}
+  .foot-brand svg{width:26px;height:26px}
+
+  .hidden{display:none!important}
+
+  @media (max-width:560px){
+    .grid{grid-template-columns:1fr}
+    .hero{padding:52px 0 26px}
+    .nav .cta span{display:none}
+    .contact{padding:34px 20px}
+  }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+
+<!-- logo reutilizable -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="zmark" viewBox="0 0 100 100">
+    <path class="z-base" d="M22 22 H78 V36 L46 64 H78 V78 H22 V64 L54 36 H22 Z"/>
+    <path class="z-diag" d="M54 36 H78 L46 64 H22 Z"/>
+  </symbol>
+</defs></svg>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="ZentroDigital">
+      <svg><use href="#zmark"/></svg>
+      <span class="word"><b>Zentro</b><span>Digital</span></span>
+    </a>
+    <a class="cta" href="#contacto">Cotiza tu página <span>→</span></a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <span class="kicker mono">Portafolio · 2026</span>
+    <h1>Sitios web que <em>enamoran</em><br>a la primera vista.</h1>
+    <p>Diseñamos páginas a la medida para negocios de toda Colombia.
+       Explora algunos de nuestros trabajos — cada uno pensado para vender,
+       agendar o dar <span class="neon">confianza</span>.</p>
+    <div class="stats">
+      <div class="stat"><b>20</b><small>PROYECTOS</small></div>
+      <div class="stat"><b>8+</b><small>INDUSTRIAS</small></div>
+      <div class="stat"><b>100%</b><small>A LA MEDIDA</small></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="filters" id="filters">
+      <button class="chip on" data-cat="all">Todos</button>
+      <button class="chip" data-cat="tienda">Tiendas</button>
+      <button class="chip" data-cat="comida">Comida</button>
+      <button class="chip" data-cat="fitness">Fitness</button>
+      <button class="chip" data-cat="servicios">Servicios</button>
+    </div>
+
+    <div class="grid" id="grid">
+
+      <!-- Ritual Verde (tarjeta con 3 estilos) -->
+      <article class="card" data-cat="tienda">
+        <a class="cover" href="https://ritual-verde-demo2.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver Ritual Verde (Elegante)"></a>
+        <div class="shot">
+          <span class="tag">Jugos naturales</span>
+          <img src="img/ritual-verde.jpg" alt="Ritual Verde — tienda de jugos" loading="lazy">
+        </div>
+        <div class="body">
+          <h3>Ritual Verde</h3>
+          <p>Tienda de jugos prensados en frío, con carrito y pedido por WhatsApp. Elige un <b>estilo</b>:</p>
+          <div class="variants">
+            <a href="https://ritual-verde-demo1.isacel-cardona.workers.dev" target="_blank" rel="noopener">Pop ↗</a>
+            <a href="https://ritual-verde-demo2.isacel-cardona.workers.dev" target="_blank" rel="noopener">Elegante ↗</a>
+            <a href="https://ritual-verde-demo3.isacel-cardona.workers.dev" target="_blank" rel="noopener">Minimalista ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Isabel Jeans -->
+      <article class="card" data-cat="tienda">
+        <a class="cover" href="https://isabel-jeans-studio.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver Isabel Jeans Studio"></a>
+        <div class="shot"><span class="tag">Moda</span>
+          <img src="img/isabel-jeans-studio.jpg" alt="Isabel Jeans Studio" loading="lazy"></div>
+        <div class="body">
+          <h3>Isabel Jeans Studio</h3>
+          <p>Tienda de jeans para mujer con catálogo, carrito y checkout por WhatsApp.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- Pasión Futbolera -->
+      <article class="card" data-cat="tienda">
+        <a class="cover" href="https://pasion-futbolera.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver Pasión Futbolera"></a>
+        <div class="shot"><span class="tag">Deportes</span>
+          <img src="img/pasion-futbolera.jpg" alt="Pasión Futbolera — camisetas" loading="lazy"></div>
+        <div class="body">
+          <h3>Pasión Futbolera</h3>
+          <p>Tienda de camisetas de fútbol: clubes, retros y selecciones, con pedidos por WhatsApp.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- El Tornillo Negro -->
+      <article class="card" data-cat="tienda">
+        <a class="cover" href="https://el-tornillo-negro.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver El Tornillo Negro"></a>
+        <div class="shot"><span class="tag">Ferretería</span>
+          <img src="img/el-tornillo-negro.jpg" alt="El Tornillo Negro — ferretería en Bogotá" loading="lazy"></div>
+        <div class="body">
+          <h3>El Tornillo Negro</h3>
+          <p>Ferretería industrial en Bogotá con tienda en línea, kits por proyecto, carrito y panel para administrar productos.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- PASO 57 -->
+      <article class="card" data-cat="tienda">
+        <a class="cover" href="https://paso-57.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver PASO 57"></a>
+        <div class="shot"><span class="tag">Zapatillas</span>
+          <img src="img/paso-57.jpg" alt="PASO 57 — tienda de zapatillas" loading="lazy"></div>
+        <div class="body">
+          <h3>PASO 57</h3>
+          <p>Tienda de zapatillas con tendencias, carrito con tallas, pedido por WhatsApp y panel para administrar productos.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- Bisonte Gastrobar -->
+      <article class="card" data-cat="comida">
+        <a class="cover" href="https://bisonte-gastrobar.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver Bisonte Gastrobar"></a>
+        <div class="shot"><span class="tag">Restaurante</span>
+          <img src="img/bisonte-gastrobar.jpg" alt="Bisonte Gastrobar — menú" loading="lazy"></div>
+        <div class="body">
+          <h3>Bisonte Gastrobar</h3>
+          <p>Menú digital interactivo con estilo del viejo oeste, categorías y platos con foto.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- Sabor Brasa -->
+      <article class="card" data-cat="comida">
+        <a class="cover" href="https://sabor-brasa.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver Sabor Brasa"></a>
+        <div class="shot"><span class="tag">Hamburguesas</span>
+          <img src="img/sabor-brasa.jpg" alt="Sabor Brasa — hamburguesas" loading="lazy"></div>
+        <div class="body">
+          <h3>Sabor Brasa</h3>
+          <p>Hamburguesas artesanales a la brasa: landing apetitosa con pedido directo.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- Sky Gym -->
+      <article class="card" data-cat="fitness">
+        <a class="cover" href="https://sky-gym.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver Sky Gym"></a>
+        <div class="shot"><span class="tag">Gimnasio</span>
+          <img src="img/sky-gym.jpg" alt="Sky Gym — gimnasio" loading="lazy"></div>
+        <div class="body">
+          <h3>Sky Gym</h3>
+          <p>Gimnasio con planes, valoración física y un diseño dorado imponente.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- TitanBox -->
+      <article class="card" data-cat="fitness">
+        <a class="cover" href="https://titan-box.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver TitanBox"></a>
+        <div class="shot"><span class="tag">CrossFit</span>
+          <img src="img/titan-box.jpg" alt="TitanBox — CrossFit" loading="lazy"></div>
+        <div class="body">
+          <h3>TitanBox</h3>
+          <p>Box de CrossFit con energía roja/negra, horarios y clase gratis de prueba.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- Patitas y Bigotes -->
+      <article class="card" data-cat="servicios">
+        <a class="cover" href="https://patitas-y-bigotes.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver Patitas y Bigotes"></a>
+        <div class="shot"><span class="tag">Veterinaria</span>
+          <img src="img/patitas-y-bigotes.jpg" alt="Patitas y Bigotes — veterinaria" loading="lazy"></div>
+        <div class="body">
+          <h3>Patitas y Bigotes</h3>
+          <p>Clínica veterinaria con tienda, reserva de citas en línea, portal de resultados y panel administrativo.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- Serena -->
+      <article class="card" data-cat="servicios">
+        <a class="cover" href="https://serena-psicologia.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver Serena Psicología"></a>
+        <div class="shot"><span class="tag">Psicología</span>
+          <img src="img/serena-psicologia.jpg" alt="Serena — psicología" loading="lazy"></div>
+        <div class="body">
+          <h3>Serena</h3>
+          <p>Consulta psicológica con un aire calmado y cercano; agenda tu cita fácil.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- Vértice Legal -->
+      <article class="card" data-cat="servicios">
+        <a class="cover" href="https://vertice-legal.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver Vértice Legal"></a>
+        <div class="shot"><span class="tag">Abogados</span>
+          <img src="img/vertice-legal.jpg" alt="Vértice Legal — abogados" loading="lazy"></div>
+        <div class="body">
+          <h3>Vértice Legal</h3>
+          <p>Firma de abogados con presencia sobria y profesional que transmite confianza.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- Stainlesss -->
+      <article class="card" data-cat="servicios">
+        <a class="cover" href="https://stainlesss.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver Stainlesss"></a>
+        <div class="shot"><span class="tag">Fotografía</span>
+          <img src="img/stainlesss.jpg" alt="Stainlesss — estudio fotográfico" loading="lazy"></div>
+        <div class="body">
+          <h3>Stainlesss</h3>
+          <p>Alquiler de estudio fotográfico por horas en Bogotá, con tarifas y reservas.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- Tinta Negra -->
+      <article class="card" data-cat="servicios">
+        <a class="cover" href="https://tinta-negra.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver Tinta Negra"></a>
+        <div class="shot"><span class="tag">Tatuajes</span>
+          <img src="img/tinta-negra.jpg" alt="Tinta Negra — estudio de tatuajes" loading="lazy"></div>
+        <div class="body">
+          <h3>Tinta Negra</h3>
+          <p>Estudio de tatuajes de lujo en Bogotá: línea fina, trazo en negro y citas por WhatsApp.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- Euripetrol -->
+      <article class="card" data-cat="servicios">
+        <a class="cover" href="https://euripetrol.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver Euripetrol"></a>
+        <div class="shot"><span class="tag">Ambiental</span>
+          <img src="img/euripetrol.jpg" alt="Euripetrol — gestión de residuos" loading="lazy"></div>
+        <div class="body">
+          <h3>Euripetrol</h3>
+          <p>Gestión integral de residuos peligrosos, con portal de certificados en línea.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- TerraSol E&C -->
+      <article class="card" data-cat="servicios">
+        <a class="cover" href="https://terrasol.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver TerraSol E&amp;C"></a>
+        <div class="shot"><span class="tag">Energía solar</span>
+          <img src="img/terrasol.jpg" alt="TerraSol E&amp;C — energía solar" loading="lazy"></div>
+        <div class="body">
+          <h3>TerraSol E&amp;C</h3>
+          <p>Energía solar para casas, negocios y proyectos, con cotización que llega directo a WhatsApp.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- Cardona y Uribe -->
+      <article class="card" data-cat="servicios">
+        <a class="cover" href="https://cardona-uribe.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver Cardona y Uribe"></a>
+        <div class="shot"><span class="tag">Inmobiliaria</span>
+          <img src="img/cardona-uribe.jpg" alt="Cardona y Uribe — inmobiliaria" loading="lazy"></div>
+        <div class="body">
+          <h3>Cardona y Uribe</h3>
+          <p>Inmuebles en venta y arriendo en Antioquia, con buscador, fichas con galería y visitas que se agendan por WhatsApp.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+      <!-- Gimnasio Monteazul -->
+      <article class="card" data-cat="servicios">
+        <a class="cover" href="https://gimnasio-monteazul.isacel-cardona.workers.dev" target="_blank" rel="noopener" aria-label="Ver Gimnasio Monteazul"></a>
+        <div class="shot"><span class="tag">Colegio</span>
+          <img src="img/gimnasio-monteazul.jpg" alt="Gimnasio Monteazul — colegio bilingüe" loading="lazy"></div>
+        <div class="body">
+          <h3>Gimnasio Monteazul</h3>
+          <p>Colegio bilingüe en Bogotá con video de portada, proceso de admisión e inscripciones que llegan directo a WhatsApp.</p>
+          <span class="go">Ver sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="wrap" id="contacto">
+    <div class="contact">
+      <h2>¿Te gustó lo que viste?</h2>
+      <p>Cuéntanos de tu negocio y te diseñamos una página que refleje tu marca.
+         Sin plantillas genéricas — a la medida, para toda Colombia.</p>
+      <div class="btns">
+        <a class="btn btn-wa" href="https://wa.me/message/X35HMW7RPMUVH1" target="_blank" rel="noopener">
+          <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 3C9.4 3 4 8.3 4 14.9c0 2.4.7 4.6 1.9 6.5L4 29l7.9-2.1c1.8 1 3.9 1.5 6.1 1.5 6.6 0 12-5.3 12-11.9C30 8.3 24.6 3 18 3h-2zm0 2.2h2c5.4 0 9.8 4.3 9.8 9.7S23.4 24.6 18 24.6c-2 0-3.8-.6-5.4-1.6l-.4-.2-4.1 1.1 1.1-3.9-.3-.4a9.5 9.5 0 01-1.6-5.3c0-5.4 4.4-9.7 9.8-9.7zm-4.3 5c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.8 6 5.2 3 1.2 3.6.9 4.2.9.7-.1 2.1-.9 2.4-1.7.3-.9.3-1.6.2-1.7-.1-.2-.3-.2-.7-.4-.4-.2-2.1-1-2.4-1.1-.3-.1-.6-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.2-.7.1-.4-.2-1.6-.6-3-1.9-1.1-1-1.8-2.2-2-2.6-.2-.3 0-.5.2-.7.2-.2.4-.4.5-.6.2-.2.2-.4.4-.6.1-.3 0-.5 0-.7-.1-.2-.8-1.9-1-2.6-.3-.7-.5-.6-.7-.6h-.4z"/></svg>
+          WhatsApp +57 333 286 6333
+        </a>
+        <a class="btn btn-mail" href="mailto:Info.ZentroDigital@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          Info.ZentroDigital@gmail.com
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="foot-brand">
+      <svg><use href="#zmark"/></svg>
+      <span class="word"><b>Zentro</b><span>Digital</span></span>
+    </span>
+    <p class="slogan">Los detalles construyen la <b class="neon">confianza</b>.</p>
+    <small>Diseño web a la medida · Cobertura: toda Colombia</small>
+    <small>© 2026 ZentroDigital</small>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var chips = document.querySelectorAll('.chip');
+    var cards = document.querySelectorAll('#grid .card');
+    document.getElementById('filters').addEventListener('click', function(e){
+      var b = e.target.closest('.chip'); if(!b) return;
+      chips.forEach(function(c){c.classList.toggle('on', c===b)});
+      var cat = b.dataset.cat;
+      cards.forEach(function(card){
+        var show = cat==='all' || card.dataset.cat===cat;
+        card.classList.toggle('hidden', !show);
+      });
+    });
+  })();
+</script>
+</body>
+</html>
